@@ -63,6 +63,7 @@ with add_function_trace.start_as_current_span("manual-root-trace") as root_span:
         # Optional - Add you additonal code HERE
 
         child_span_1.add_event("Some event in child span 1 ...") # Optional - Add an event
+        child_span_1.set_attribute("custom", "attribute 1") # Optinal - Set custom attribute
         child_span_1.set_status(trace.StatusCode.OK) # Optional - Set status OK
 
     # Create another child span under root
@@ -72,4 +73,5 @@ with add_function_trace.start_as_current_span("manual-root-trace") as root_span:
         # Optional - Add you additonal code HERE
 
         child_span_2.add_event("Some event in child span 2 ...") # Optional - Add an event
+        child_span_2.set_attribute("custom", "attribute 2") # Optinal - Set custom attribute
         child_span_2.set_status(trace.StatusCode.ERROR) # Optional - Set status ERROR
