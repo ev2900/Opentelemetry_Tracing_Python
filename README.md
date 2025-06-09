@@ -24,3 +24,4 @@ Additionally at any point in a span we can also record an event which would be a
 
 ## Visualizing Traces, Spans, Events via. Jaeger
 
+<img width="700" alt="opensearch_nginx_yaml" src="https://github.com/ev2900/Opentelemetry_Tracing_Python/blob/main/README/jaeger-trace.png">
