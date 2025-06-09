@@ -20,6 +20,51 @@ Additionally at any point in a span we can also record an event which would be a
 
 ## Python Code Examples 
 
+The [opentelem-example.py](https://github.com/ev2900/Opentelemetry_Tracing_Python/blob/main/opentelem-example.py) file has example code to generate traces, spans and events in python. 
+
+The code has two main sections. The first option show how you can add span generation that is automatically triggered when a function is called.  To understand this pattern better check out this section of the example
+
+```
+@add_function_trace.start_as_current_span("automatic-child-span-1-add-function") # Everytime the add function is called a span will automaticlly be added to the trace
+def add(first, second): # Simple example function adding two numbers    
+    
+    current_span = trace.get_current_span() # Optional - Customize the current span
+    current_span.set_status(trace.StatusCode.OK) # Optional - Set status OK or ERROR
+
+    # Optional - Add an event
+    print(first)
+    current_span.add_event(name="print first number", attributes={"first_number": first}, timestamp = time.time_ns())
+    time.sleep(1)
+
+    return first + second
+```
+
+The second option you can more directly control the generation of spans. To understand this pattern better check out this section of the example 
+
+```
+# Create a root span
+with add_function_trace.start_as_current_span("manual-root-trace") as root_span:
+    
+    # Create child span under root
+    with add_function_trace.start_as_current_span("manual-child-span-1") as child_span_1:
+        time.sleep(0.5)
+
+        # Optional - Add you additonal code HERE
+
+        child_span_1.add_event("Some event in child span 1 ...") # Optional - Add an event
+        child_span_1.set_attribute("custom", "attribute 1") # Optinal - Set custom attribute
+        child_span_1.set_status(trace.StatusCode.OK) # Optional - Set status OK
+
+    # Create another child span under root
+    with add_function_trace.start_as_current_span("manual-child-span-2") as child_span_2:
+        time.sleep(0.8)
+        
+        # Optional - Add you additonal code HERE
+
+        child_span_2.add_event("Some event in child span 2 ...") # Optional - Add an event
+        child_span_2.set_attribute("custom", "attribute 2") # Optinal - Set custom attribute
+        child_span_2.set_status(trace.StatusCode.ERROR) # Optional - Set status ERROR
+```
 
 ## Visualizing Traces, Spans, Events via. Jaeger
 
