@@ -1,8 +1,8 @@
 # Opentelemetry Traces, Spans and Events via. Python
 
-<img width="85" alt="map-user" src="https://img.shields.io/badge/views-000-green"> <img width="125" alt="map-user" src="https://img.shields.io/badge/unique visits-000-green">
+<img width="85" alt="map-user" src="https://img.shields.io/badge/views-047-green"> <img width="125" alt="map-user" src="https://img.shields.io/badge/unique visits-000-green">
 
-This repository has examples implementing traces, spans and event analytics via. Opentelemetry in Python. An example of visualizing these via. Jaeger (running on docker) is also provided. 
+This repository has examples implementing traces, spans and event analytics via. Opentelemetry in Python. An example of visualizing these via. Jaeger (running on docker) is also provided.
 
 ## What are Traces, Spans, Events ...
 
@@ -14,22 +14,22 @@ The major components of trace analytics via. Opentelemetry are as follows
 
 For example, if you had a button on a website that submitted an order, loaded a new web page with a confirmation and sent a confirmation email, each click of the button could be a trace ie. the order trace. Under each order trace could would be multiple spans. The first span for writing the order information to a database, the second for the be the GET request and loading of the confirmation page and a third span for sending the confirmation email.
 
-Structuring the trace and spans like ^ would give you a nice graph showing how long the overall process (trace) took and how long each of the subprocess (span) took. 
+Structuring the trace and spans like ^ would give you a nice graph showing how long the overall process (trace) took and how long each of the subprocess (span) took.
 
 If you had issues with this process would could look a visual of the traces and/or spans to see where a process failed or incurred additional latency.
 
 Additionally at any point in a span we can also record an event which would be a discrete point of interest.
 
-## Python Code Examples 
+## Python Code Examples
 
-The [opentelem-example.py](https://github.com/ev2900/Opentelemetry_Tracing_Python/blob/main/opentelem-example.py) file has example code to generate traces, spans and events in python. 
+The [opentelem-example.py](https://github.com/ev2900/Opentelemetry_Tracing_Python/blob/main/opentelem-example.py) file has example code to generate traces, spans and events in python.
 
 The code has two main sections. The first option show how you can add span generation that is automatically triggered when a function is called.  To understand this pattern better check out this section of the example
 
 ```
 @add_function_trace.start_as_current_span("automatic-child-span-1-add-function") # Everytime the add function is called a span will automaticlly be added to the trace
-def add(first, second): # Simple example function adding two numbers    
-    
+def add(first, second): # Simple example function adding two numbers
+
     current_span = trace.get_current_span() # Optional - Customize the current span
     current_span.set_status(trace.StatusCode.OK) # Optional - Set status OK or ERROR
 
@@ -41,12 +41,12 @@ def add(first, second): # Simple example function adding two numbers
     return first + second
 ```
 
-The second option you can more directly control the generation of spans. To understand this pattern better check out this section of the example 
+The second option you can more directly control the generation of spans. To understand this pattern better check out this section of the example
 
 ```
 # Create a root span
 with add_function_trace.start_as_current_span("manual-root-trace") as root_span:
-    
+
     # Create child span under root
     with add_function_trace.start_as_current_span("manual-child-span-1") as child_span_1:
         time.sleep(0.5)
@@ -60,7 +60,7 @@ with add_function_trace.start_as_current_span("manual-root-trace") as root_span:
     # Create another child span under root
     with add_function_trace.start_as_current_span("manual-child-span-2") as child_span_2:
         time.sleep(0.8)
-        
+
         # Optional - Add you additonal code HERE
 
         child_span_2.add_event("Some event in child span 2 ...") # Optional - Add an event
