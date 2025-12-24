@@ -1,6 +1,6 @@
 # Opentelemetry Traces, Spans and Events via. Python
 
-<img width="85" alt="map-user" src="https://img.shields.io/badge/views-076-green"> <img width="125" alt="map-user" src="https://img.shields.io/badge/unique visits-014-green">
+<img width="85" alt="map-user" src="https://img.shields.io/badge/views-077-green"> <img width="125" alt="map-user" src="https://img.shields.io/badge/unique visits-014-green">
 
 This repository has examples implementing traces, spans and event analytics via. Opentelemetry in Python. An example of visualizing these via. Jaeger (running on docker) is also provided.
 
